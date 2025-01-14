@@ -25,7 +25,7 @@ def login(request):
             if password_valido(password, usuario.password, salt):
                 request.session['nick'] = usuario.nick
                 request.session['ha_iniciado_sesion'] = True
-                request.user = usuario  # Asegurarse de que request.user es el usuario autenticado
+                request.user = usuario  # Asegura de que request.user es el usuario autenticado
 
                 return redirect('firmas:home')
             else:

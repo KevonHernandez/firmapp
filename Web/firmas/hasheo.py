@@ -21,11 +21,6 @@ def password_valido(password, hash_almacenado, salt_almacenado):
     hash_resultado = hasher.hexdigest()
     return hash_almacenado == hash_resultado
 
-# def convertir_binario_texto64(binario):
-#     if isinstance(binario, str):  # Verificar si el binario ya es una cadena
-#         binario = binario.encode('utf-8')  # Convertir a bytes
-#     return base64.b64encode(binario).decode('utf-8')
-
 def convertir_binario_texto64(data_binaria):
     """Convierte datos binarios a Base64 con relleno si es necesario."""
     base64_data = base64.b64encode(data_binaria).decode('utf-8')

@@ -53,10 +53,6 @@ def descifrar_llave_privada(private_key_cifrada_base64, password, iv_base64, sal
     iv = base64.b64decode(iv_base64)
     salt=base64.b64decode(salt_base64)
 
-    # Asegurarse de que el IV tiene 16 bytes
-    # if len(iv) != 16:
-    #     raise ValueError(f"El tamaño del IV es incorrecto. Se esperaba un IV de 16 bytes, pero se recibió uno de {len(iv)} bytes.")
-
     # Derivar la llave AES de la contraseña y salt usando HKDF
     password_bytes = password.encode('utf-8')
     derived_key = HKDF(
@@ -72,7 +68,6 @@ def descifrar_llave_privada(private_key_cifrada_base64, password, iv_base64, sal
     # Configuración del cifrado AES en modo CTR
     aes_cipher = Cipher(algorithms.AES(derived_key), modes.CTR(iv), backend=default_backend())
     decryptor = aes_cipher.decryptor()
-    print(f"decriptor: {decryptor}")
     # Decodificar la clave privada cifrada desde base64
     private_key_cifrada = base64.b64decode(private_key_cifrada_base64)
     
@@ -85,5 +80,4 @@ def descifrar_llave_privada(private_key_cifrada_base64, password, iv_base64, sal
         password=None,  # No hay password en el PEM
         backend=default_backend()
     )
-    print(f"decriptor: {decryptor}")
     return private_key

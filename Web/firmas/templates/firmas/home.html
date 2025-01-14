@@ -14,16 +14,6 @@
 
 </div>
 {% endif %}
-<!-- Formulario para cerrar sesión en la parte superior derecha
-<div class="position-absolute top-0 end-0 m-3">
-    {% if request.session.ha_iniciado_sesion %}
-    <form method="POST" action="{% url 'firmas:home' %}">
-        {% csrf_token %}
-        <button type="submit" name="cerrar_sesion" value="true" class="btn btn-danger" style="margin: 90px;">
-            Cerrar sesión</button>
-    </form>
-    {% endif %}
-</div> -->
 
 
 <!-- Sección de firma de archivos  -->
