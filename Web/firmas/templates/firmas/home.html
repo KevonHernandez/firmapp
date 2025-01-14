@@ -1,0 +1,121 @@
+{% extends 'firmas/base.html' %}
+
+{% block title %}Inicio - eFirma{% endblock %}
+
+{% block content %}
+
+<!-- Bloque para mostrar mensajes -->
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+</div>
+{% endif %}
+<!-- Formulario para cerrar sesión en la parte superior derecha
+<div class="position-absolute top-0 end-0 m-3">
+    {% if request.session.ha_iniciado_sesion %}
+    <form method="POST" action="{% url 'firmas:home' %}">
+        {% csrf_token %}
+        <button type="submit" name="cerrar_sesion" value="true" class="btn btn-danger" style="margin: 90px;">
+            Cerrar sesión</button>
+    </form>
+    {% endif %}
+</div> -->
+
+
+<!-- Sección de firma de archivos  -->
+
+<div class="container mt-5">
+    <h1 class="text-left mb-5">Firmapp</h1>
+    <div class="row-md-6">
+        <h2>
+            <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#signatureSection" role="button"
+                aria-expanded="false" aria-controls="signatureSection">
+                Firma de Archivos
+            </a>
+        </h2>
+        <p>Sube un archivo y obtén una firma digital. Tu archivo no será almacenado en el servidor.</p>
+        <div class="collapse" id="signatureSection">
+            <form method="POST" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="archivo" class="form-label">Selecciona un archivo</label>
+                    <input type="file" class="form-control" id="archivo" name="archivo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Introduce tu contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Firmar Archivo</button>
+            </form>
+        </div>
+    </div>
+    <!-- Sección de verificacion de firmas  -->
+
+    <div class="border-top my-4"></div>
+
+    <div class="row-md-6">
+        <h2>
+            <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#verificationSection"
+                role="button" aria-expanded="false" aria-controls="verificationSection" aria-label="Verificar Firmas">
+                Verificación de Firmas
+            </a>
+        </h2>
+        <p>Verifica la validez de un archivo y su firma digital.</p>
+        <div class="collapse" id="verificationSection" aria-labelledby="verificationSectionLabel">
+            <form action="{% url 'firmas:validar_firma' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="archivofirmado" class="form-label">Selecciona un archivo</label>
+                    <input type="file" class="form-control" id="archivofirmado" name="archivofirmado"  required aria-describedby="fileVerifyHelp">
+                    <small id="fileVerifyHelp" class="form-text text-muted">Selecciona el archivo para la
+                        verificación.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="firma" class="form-label">Selecciona el archivo de firma</label>
+                    <input type="file" class="form-control" id="firma" name="firma" required
+                        aria-describedby="signatureFileHelp">
+                    <small id="signatureFileHelp" class="form-text text-muted">Selecciona el archivo de firma asociado
+                        al documento.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre_firmante" class="form-label">Usuario que firmó</label>
+                    <input type="text" class="form-control" id="nombre_firmante" name="nombre_firmante"
+                        placeholder="Introduce el usuario que firmó el archivo" required aria-describedby="signerHelp">
+                    <small id="signerHelp" class="form-text text-muted">Nombre del usuario que firmó el
+                        archivo.</small>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Verificar Firma</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="border-top my-4"></div>
+
+    <!-- Sección de renovación de llaves  -->
+    <div class="row-md-6">
+        <h2>
+            <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#keyRenewalSection" role="button"
+                aria-expanded="false" aria-controls="keyRenewalSection" aria-label="Renovar Llaves">
+                Renovación de Llaves
+            </a>
+        </h2>
+        <p>Renueva tus llaves para invalidar las anteriores y generar nuevas.</p>
+        <div class="collapse" id="keyRenewalSection" aria-labelledby="keyRenewalSectionLabel">
+            <div class="mb-3">
+                <label for="keyCreationDate" class="form-label">Fecha de creación de las llaves</label>
+                <input type="text" class="form-control" id="keyCreationDate" value="2025-01-08" readonly
+                    aria-describedby="keyCreationDateHelp">
+                <small id="keyCreationDateHelp" class="form-text text-muted">La fecha de creación de las llaves
+                    actuales.</small>
+            </div>
+            <button class="btn btn-danger" aria-label="Renovar las llaves">Renovar Llaves</button>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

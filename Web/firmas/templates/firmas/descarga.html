@@ -1,0 +1,14 @@
+{% extends 'firmas/base.html' %}
+{% block content %}
+
+<h1>Descargar</h1>
+"Archivo de firma para: "{{filename }}
+<a href='data:application/octect-stream;base64,{{file}}' class="btn btn-primary" download="{{filename}}.pem" >Descargar</a>
+
+
+
+
+
+
+
+{% endblock %}
